@@ -152,7 +152,33 @@ app.post("/project", (request, response) => {
     })
     // catch error if email does not exist
     
+//project id update endpoint
 
+app.post("/updateproject", (request, response) => {
+  // check if email exists
+
+  User.findOneAndUpdate(
+    {email:request.body.email} ,
+    {
+      projectid:request.body.projectid
+    })
+    
+    .then((user) => {
+      //   return success response
+      response.status(200).send({
+        message: "Update Successful",
+        email: user.email
+      });
+    })
+        // catch error if password does not match
+        .catch((error) => {
+          response.status(400).send({
+            message: "email does not match",
+            error,
+          });
+        });
+        
+    })
 
 
 module.exports = app;
