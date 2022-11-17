@@ -127,7 +127,7 @@ app.post("/login", (request, response) => {
     });
 });
 
-// login endpoint
+// get project id endpoint
 app.post("/project", (request, response) => {
   // check if email exists
   User.findOne({ email: request.body.email })
@@ -179,6 +179,33 @@ app.post("/updateproject", (request, response) => {
         });
         
     })
+
+// check email id endpoint
+app.post("/checkemail", (request, response) => {
+  // check if email exists
+  User.findOne({ email: request.body.email })
+
+    // if email exists
+    .then((user) => {
+          //   return success response
+          response.status(200).send({
+            email_id: user.email
+            
+          });
+        })
+        // catch error if password does not match
+        .catch((error) => {
+          response.status(400).send({
+            message: "email does not exist",
+            error,
+          });
+        });
+    
+        
+    })
+    // catch error if email does not exist
+
+
 
 
 module.exports = app;
